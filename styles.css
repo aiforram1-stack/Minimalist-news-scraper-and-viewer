@@ -511,6 +511,12 @@ body {
     gap: 4px;
 }
 
+.news-grid.layout-list .star-btn {
+    position: static;
+    order: -1;
+    flex-shrink: 0;
+}
+
 /* News Grid - Compact Layout */
 .news-grid.layout-compact {
     grid-template-columns: repeat(4, 1fr);
