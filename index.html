@@ -17,7 +17,7 @@
         <nav class="nav">
             <a href="#" class="nav-link" data-view="topics">TOPICS</a>
             <a href="#" class="nav-link" data-view="news">NEWS</a>
-            <a href="#" class="nav-link" data-view="starred">STARRED</a>
+            <a href="#" class="nav-link nav-star" data-view="starred">★</a>
         </nav>
         <div class="logo">NEWS SCRAPER</div>
         <div class="header-actions">
@@ -32,6 +32,29 @@
             <div class="page-title">
                 <h1>SELECT TOPICS</h1>
                 <p>CHOOSE CATEGORIES TO DISCOVER</p>
+            </div>
+
+            <!-- Region Selector -->
+            <div class="region-section">
+                <div class="section-label">SELECT REGIONS</div>
+                <div class="region-grid" id="regionGrid">
+                    <div class="region-item selected" data-code="US" data-lang="en-US">WORLDWIDE</div>
+                    <div class="region-item" data-code="IN" data-lang="en-IN">INDIA</div>
+                    <div class="region-item" data-code="GB" data-lang="en-GB">UK</div>
+                    <div class="region-item" data-code="CA" data-lang="en-CA">CANADA</div>
+                    <div class="region-item" data-code="AU" data-lang="en-AU">AUSTRALIA</div>
+                    <div class="region-item" data-code="DE" data-lang="de-DE">GERMANY</div>
+                    <div class="region-item" data-code="FR" data-lang="fr-FR">FRANCE</div>
+                    <div class="region-item" data-code="JP" data-lang="ja-JP">JAPAN</div>
+                    <div class="region-item" data-code="BR" data-lang="pt-BR">BRAZIL</div>
+                    <div class="region-item" data-code="MX" data-lang="es-MX">MEXICO</div>
+                    <div class="region-item" data-code="SG" data-lang="en-SG">SINGAPORE</div>
+                    <div class="region-item" data-code="AE" data-lang="en-AE">UAE</div>
+                </div>
+                <div class="selected-regions" id="selectedRegionsDisplay">
+                    <span class="regions-label">ACTIVE:</span>
+                    <span id="activeRegionsList">WORLDWIDE</span>
+                </div>
             </div>
 
             <!-- Topics Grid -->
@@ -126,7 +149,7 @@
             <!-- Empty Starred State -->
             <div class="empty-state" id="emptyStarredState">
                 <p>NO STARRED ARTICLES</p>
-                <p class="empty-hint">CLICK THE ★ ON ANY ARTICLE TO SAVE IT</p>
+                <p class="empty-hint">CLICK THE STAR ON ANY ARTICLE TO SAVE IT</p>
                 <button class="btn btn-secondary" data-view="news">BROWSE NEWS</button>
             </div>
 
@@ -140,7 +163,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <span>NEWS SCRAPER © 2024</span>
+            <span>NEWS SCRAPER</span>
         </div>
     </footer>
 

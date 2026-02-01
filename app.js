@@ -1,4 +1,4 @@
-// ===== PRESET TOPICS =====
+// Preset topic categories
 const PRESET_TOPICS = [
     "TECHNOLOGY",
     "ARTIFICIAL INTELLIGENCE",
@@ -22,13 +22,17 @@ const PRESET_TOPICS = [
     "ELECTRIC VEHICLES"
 ];
 
-// ===== STATE =====
+// State
 let selectedTopics = new Set();
 let customTopics = new Set();
+let selectedRegions = new Map(); // Map of code -> {code, lang, name}
 let articles = [];
-let starredArticles = new Set(); // Store starred article links
+let starredArticles = new Set();
 let currentLayout = 'grid';
 let starredLayout = 'grid';
+
+// Initialize with worldwide selected
+selectedRegions.set('US', { code: 'US', lang: 'en-US', name: 'WORLDWIDE' });
 
 // Load starred from localStorage
 function loadStarred() {
@@ -43,7 +47,7 @@ function saveStarred() {
     localStorage.setItem('starredArticles', JSON.stringify([...starredArticles]));
 }
 
-// ===== DOM ELEMENTS =====
+// DOM Elements
 const topicsGrid = document.getElementById('topicsGrid');
 const customInput = document.getElementById('customInput');
 const addBtn = document.getElementById('addBtn');
@@ -59,18 +63,22 @@ const emptyState = document.getElementById('emptyState');
 const emptyStarredState = document.getElementById('emptyStarredState');
 const newsSubtitle = document.getElementById('newsSubtitle');
 const starredSubtitle = document.getElementById('starredSubtitle');
+const regionGrid = document.getElementById('regionGrid');
+const activeRegionsList = document.getElementById('activeRegionsList');
 
-// ===== INITIALIZATION =====
+// Initialize
 function init() {
     loadStarred();
     renderTopics();
     setupEventListeners();
     setupNavigation();
     setupLayoutControls();
+    setupRegionSelector();
+    updateRegionDisplay();
     updateUI();
 }
 
-// ===== RENDER TOPICS =====
+// Render topic grid
 function renderTopics() {
     topicsGrid.innerHTML = PRESET_TOPICS.map(topic => `
         <div class="topic-item" data-topic="${topic}">${topic}</div>
@@ -81,7 +89,7 @@ function renderTopics() {
     });
 }
 
-// ===== TOGGLE TOPIC =====
+// Toggle topic selection
 function toggleTopic(item) {
     const topic = item.dataset.topic;
 
@@ -96,15 +104,13 @@ function toggleTopic(item) {
     updateUI();
 }
 
-// ===== EVENT LISTENERS =====
+// Event listeners
 function setupEventListeners() {
-    // Add custom topic
     addBtn.addEventListener('click', addCustomTopic);
     customInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') addCustomTopic();
     });
 
-    // Clear all
     clearBtn.addEventListener('click', () => {
         selectedTopics.clear();
         customTopics.clear();
@@ -115,7 +121,6 @@ function setupEventListeners() {
         updateUI();
     });
 
-    // Select all
     selectAllBtn.addEventListener('click', () => {
         PRESET_TOPICS.forEach(topic => selectedTopics.add(topic));
         document.querySelectorAll('.topic-item').forEach(item => {
@@ -124,39 +129,33 @@ function setupEventListeners() {
         updateUI();
     });
 
-    // Start scraping
     scrapeBtn.addEventListener('click', startScraping);
 }
 
-// ===== NAVIGATION =====
+// Navigation
 function setupNavigation() {
     document.querySelectorAll('[data-view]').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const viewId = link.dataset.view + 'View';
 
-            // Update nav active state
             document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
             document.querySelector(`.nav-link[data-view="${link.dataset.view}"]`)?.classList.add('active');
 
-            // Show view
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(viewId)?.classList.add('active');
 
-            // Render starred view if needed
             if (link.dataset.view === 'starred') {
                 renderStarred();
             }
         });
     });
 
-    // Set initial active
     document.querySelector('.nav-link[data-view="topics"]').classList.add('active');
 }
 
-// ===== LAYOUT CONTROLS =====
+// Layout controls
 function setupLayoutControls() {
-    // News layout controls
     document.querySelectorAll('#newsView .layout-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('#newsView .layout-btn').forEach(b => b.classList.remove('active'));
@@ -166,7 +165,6 @@ function setupLayoutControls() {
         });
     });
 
-    // Starred layout controls
     document.querySelectorAll('#starredView .layout-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('#starredView .layout-btn').forEach(b => b.classList.remove('active'));
@@ -184,7 +182,36 @@ function applyLayout(grid, layout) {
     }
 }
 
-// ===== ADD CUSTOM TOPIC =====
+// Region selector (multi-select)
+function setupRegionSelector() {
+    document.querySelectorAll('.region-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const code = item.dataset.code;
+            const lang = item.dataset.lang;
+            const name = item.textContent;
+
+            if (selectedRegions.has(code)) {
+                // Don't allow deselecting if it's the last one
+                if (selectedRegions.size > 1) {
+                    selectedRegions.delete(code);
+                    item.classList.remove('selected');
+                }
+            } else {
+                selectedRegions.set(code, { code, lang, name });
+                item.classList.add('selected');
+            }
+
+            updateRegionDisplay();
+        });
+    });
+}
+
+function updateRegionDisplay() {
+    const names = Array.from(selectedRegions.values()).map(r => r.name);
+    activeRegionsList.textContent = names.join(', ');
+}
+
+// Add custom topic
 function addCustomTopic() {
     const topic = customInput.value.trim().toUpperCase();
 
@@ -196,7 +223,7 @@ function addCustomTopic() {
     }
 }
 
-// ===== RENDER CUSTOM TAGS =====
+// Render custom topic tags
 function renderCustomTags() {
     customTags.innerHTML = Array.from(customTopics).map(topic => `
         <div class="custom-tag">
@@ -214,14 +241,14 @@ function renderCustomTags() {
     });
 }
 
-// ===== UPDATE UI =====
+// Update UI state
 function updateUI() {
     const total = selectedTopics.size + customTopics.size;
     selectedCount.textContent = `${total} SELECTED`;
     scrapeBtn.disabled = total === 0;
 }
 
-// ===== TOGGLE STAR =====
+// Toggle star
 function toggleStar(link) {
     if (starredArticles.has(link)) {
         starredArticles.delete(link);
@@ -232,7 +259,7 @@ function toggleStar(link) {
     renderNews();
 }
 
-// ===== START SCRAPING =====
+// Start scraping
 async function startScraping() {
     const allTopics = [...selectedTopics, ...customTopics];
     if (allTopics.length === 0) return;
@@ -243,18 +270,20 @@ async function startScraping() {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById('newsView').classList.add('active');
 
-    // Show loading
     loadingState.classList.add('active');
     emptyState.classList.remove('active');
     newsGrid.style.display = 'none';
 
     try {
-        // Fetch news from Google News RSS for each topic
         articles = [];
+        const regions = Array.from(selectedRegions.values());
 
+        // Fetch for each topic and region combination
         for (const topic of allTopics) {
-            const topicArticles = await fetchNews(topic);
-            articles.push(...topicArticles);
+            for (const region of regions) {
+                const topicArticles = await fetchNews(topic, region);
+                articles.push(...topicArticles);
+            }
         }
 
         // Remove duplicates by link
@@ -265,10 +294,8 @@ async function startScraping() {
             return true;
         });
 
-        // Update subtitle
-        newsSubtitle.textContent = `${articles.length} ARTICLES FROM ${allTopics.length} TOPICS`;
-
-        // Render articles
+        const regionNames = regions.map(r => r.name).join(', ');
+        newsSubtitle.textContent = `${articles.length} ARTICLES FROM ${allTopics.length} TOPICS (${regionNames})`;
         renderNews();
 
     } catch (error) {
@@ -279,10 +306,9 @@ async function startScraping() {
     }
 }
 
-// ===== FETCH NEWS =====
-async function fetchNews(topic) {
-    // Using RSS2JSON API to fetch Google News RSS
-    const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(topic)}&hl=en-US&gl=US&ceid=US:en`;
+// Fetch news from Google News RSS
+async function fetchNews(topic, region) {
+    const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(topic)}&hl=${region.lang}&gl=${region.code}&ceid=${region.code}:${region.lang.split('-')[0]}`;
     const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&count=10`;
 
     try {
@@ -291,7 +317,6 @@ async function fetchNews(topic) {
 
         if (data.status === 'ok' && data.items) {
             return data.items.map(item => {
-                // Extract source from title (format: "Title - Source")
                 let title = item.title;
                 let source = 'UNKNOWN';
 
@@ -310,7 +335,8 @@ async function fetchNews(topic) {
                         month: 'short',
                         day: 'numeric'
                     }).toUpperCase(),
-                    topic: topic
+                    topic: topic,
+                    region: region.name
                 };
             });
         }
@@ -321,7 +347,7 @@ async function fetchNews(topic) {
     }
 }
 
-// ===== RENDER NEWS =====
+// Render news grid
 function renderNews() {
     if (articles.length === 0) {
         emptyState.classList.add('active');
@@ -353,9 +379,8 @@ function renderNews() {
     `).join('');
 }
 
-// ===== RENDER STARRED =====
+// Render starred articles
 function renderStarred() {
-    // Get starred articles from the articles array
     const starred = articles.filter(a => starredArticles.has(a.link));
 
     if (starred.length === 0) {
@@ -391,14 +416,13 @@ function renderStarred() {
     `).join('');
 }
 
-// Toggle star from starred view (also re-renders)
+// Toggle star from starred view
 function toggleStarFromStarred(link) {
     starredArticles.delete(link);
     saveStarred();
     renderStarred();
-    renderNews(); // Update news view too
+    renderNews();
 }
 
-// ===== INITIALIZE =====
+// Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', init);
-
