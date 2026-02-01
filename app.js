@@ -401,3 +401,4 @@ function toggleStarFromStarred(link) {
 
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', init);
+
