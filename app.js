@@ -25,14 +25,14 @@ const PRESET_TOPICS = [
 // State
 let selectedTopics = new Set();
 let customTopics = new Set();
-let selectedRegions = new Map(); // Map of code -> {code, lang, name}
+let selectedRegions = new Map();
 let articles = [];
 let starredArticles = new Set();
 let currentLayout = 'grid';
 let starredLayout = 'grid';
 
-// Initialize with worldwide selected
-selectedRegions.set('US', { code: 'US', lang: 'en-US', name: 'WORLDWIDE' });
+// Initialize with USA selected
+selectedRegions.set('US', { code: 'US', lang: 'en-US', name: 'USA' });
 
 // Load starred from localStorage
 function loadStarred() {
@@ -65,6 +65,8 @@ const newsSubtitle = document.getElementById('newsSubtitle');
 const starredSubtitle = document.getElementById('starredSubtitle');
 const regionGrid = document.getElementById('regionGrid');
 const activeRegionsList = document.getElementById('activeRegionsList');
+const moreRegionsToggle = document.getElementById('moreRegionsToggle');
+const moreRegions = document.querySelector('.more-regions');
 
 // Initialize
 function init() {
@@ -184,6 +186,7 @@ function applyLayout(grid, layout) {
 
 // Region selector (multi-select)
 function setupRegionSelector() {
+    // Handle all region items (both in main grid and dropdown)
     document.querySelectorAll('.region-item').forEach(item => {
         item.addEventListener('click', () => {
             const code = item.dataset.code;
@@ -191,7 +194,6 @@ function setupRegionSelector() {
             const name = item.textContent;
 
             if (selectedRegions.has(code)) {
-                // Don't allow deselecting if it's the last one
                 if (selectedRegions.size > 1) {
                     selectedRegions.delete(code);
                     item.classList.remove('selected');
@@ -204,11 +206,20 @@ function setupRegionSelector() {
             updateRegionDisplay();
         });
     });
+
+    // Toggle more regions dropdown
+    moreRegionsToggle.addEventListener('click', () => {
+        moreRegions.classList.toggle('open');
+    });
 }
 
 function updateRegionDisplay() {
     const names = Array.from(selectedRegions.values()).map(r => r.name);
-    activeRegionsList.textContent = names.join(', ');
+    if (names.length > 3) {
+        activeRegionsList.textContent = names.slice(0, 3).join(', ') + ` +${names.length - 3} more`;
+    } else {
+        activeRegionsList.textContent = names.join(', ');
+    }
 }
 
 // Add custom topic
@@ -278,7 +289,6 @@ async function startScraping() {
         articles = [];
         const regions = Array.from(selectedRegions.values());
 
-        // Fetch for each topic and region combination
         for (const topic of allTopics) {
             for (const region of regions) {
                 const topicArticles = await fetchNews(topic, region);
@@ -294,8 +304,11 @@ async function startScraping() {
             return true;
         });
 
-        const regionNames = regions.map(r => r.name).join(', ');
-        newsSubtitle.textContent = `${articles.length} ARTICLES FROM ${allTopics.length} TOPICS (${regionNames})`;
+        const regionNames = regions.map(r => r.name);
+        let regionDisplay = regionNames.length > 2
+            ? regionNames.slice(0, 2).join(', ') + ` +${regionNames.length - 2}`
+            : regionNames.join(', ');
+        newsSubtitle.textContent = `${articles.length} ARTICLES | ${allTopics.length} TOPICS | ${regionDisplay}`;
         renderNews();
 
     } catch (error) {

@@ -17,11 +17,11 @@
         <nav class="nav">
             <a href="#" class="nav-link" data-view="topics">TOPICS</a>
             <a href="#" class="nav-link" data-view="news">NEWS</a>
-            <a href="#" class="nav-link nav-star" data-view="starred">★</a>
         </nav>
         <div class="logo">NEWS SCRAPER</div>
         <div class="header-actions">
             <span class="selected-count" id="selectedCount">0 SELECTED</span>
+            <a href="#" class="nav-link nav-star" data-view="starred">★</a>
         </div>
     </header>
 
@@ -37,23 +37,68 @@
             <!-- Region Selector -->
             <div class="region-section">
                 <div class="section-label">SELECT REGIONS</div>
+
+                <!-- Main Region Grid -->
                 <div class="region-grid" id="regionGrid">
-                    <div class="region-item selected" data-code="US" data-lang="en-US">WORLDWIDE</div>
-                    <div class="region-item" data-code="IN" data-lang="en-IN">INDIA</div>
+                    <div class="region-item selected" data-code="US" data-lang="en-US">USA</div>
                     <div class="region-item" data-code="GB" data-lang="en-GB">UK</div>
-                    <div class="region-item" data-code="CA" data-lang="en-CA">CANADA</div>
-                    <div class="region-item" data-code="AU" data-lang="en-AU">AUSTRALIA</div>
+                    <div class="region-item" data-code="IN" data-lang="en-IN">INDIA</div>
+                    <div class="region-item" data-code="CN" data-lang="zh-CN">CHINA</div>
+                    <div class="region-item" data-code="JP" data-lang="ja-JP">JAPAN</div>
                     <div class="region-item" data-code="DE" data-lang="de-DE">GERMANY</div>
                     <div class="region-item" data-code="FR" data-lang="fr-FR">FRANCE</div>
-                    <div class="region-item" data-code="JP" data-lang="ja-JP">JAPAN</div>
+                    <div class="region-item" data-code="RU" data-lang="ru-RU">RUSSIA</div>
                     <div class="region-item" data-code="BR" data-lang="pt-BR">BRAZIL</div>
-                    <div class="region-item" data-code="MX" data-lang="es-MX">MEXICO</div>
-                    <div class="region-item" data-code="SG" data-lang="en-SG">SINGAPORE</div>
-                    <div class="region-item" data-code="AE" data-lang="en-AE">UAE</div>
+                    <div class="region-item" data-code="AU" data-lang="en-AU">AUSTRALIA</div>
+                    <div class="region-item" data-code="CA" data-lang="en-CA">CANADA</div>
+                    <div class="region-item" data-code="KR" data-lang="ko-KR">S. KOREA</div>
                 </div>
+
+                <!-- More Regions Dropdown -->
+                <div class="more-regions">
+                    <div class="more-regions-toggle" id="moreRegionsToggle">
+                        <span>MORE REGIONS</span>
+                        <span class="toggle-arrow">▼</span>
+                    </div>
+                    <div class="more-regions-dropdown" id="moreRegionsDropdown">
+                        <div class="region-item" data-code="MX" data-lang="es-MX">MEXICO</div>
+                        <div class="region-item" data-code="ES" data-lang="es-ES">SPAIN</div>
+                        <div class="region-item" data-code="IT" data-lang="it-IT">ITALY</div>
+                        <div class="region-item" data-code="NL" data-lang="nl-NL">NETHERLANDS</div>
+                        <div class="region-item" data-code="SE" data-lang="sv-SE">SWEDEN</div>
+                        <div class="region-item" data-code="PL" data-lang="pl-PL">POLAND</div>
+                        <div class="region-item" data-code="TR" data-lang="tr-TR">TURKEY</div>
+                        <div class="region-item" data-code="SA" data-lang="ar-SA">SAUDI ARABIA</div>
+                        <div class="region-item" data-code="AE" data-lang="en-AE">UAE</div>
+                        <div class="region-item" data-code="EG" data-lang="ar-EG">EGYPT</div>
+                        <div class="region-item" data-code="ZA" data-lang="en-ZA">SOUTH AFRICA</div>
+                        <div class="region-item" data-code="NG" data-lang="en-NG">NIGERIA</div>
+                        <div class="region-item" data-code="ID" data-lang="id-ID">INDONESIA</div>
+                        <div class="region-item" data-code="MY" data-lang="en-MY">MALAYSIA</div>
+                        <div class="region-item" data-code="SG" data-lang="en-SG">SINGAPORE</div>
+                        <div class="region-item" data-code="PH" data-lang="en-PH">PHILIPPINES</div>
+                        <div class="region-item" data-code="TH" data-lang="th-TH">THAILAND</div>
+                        <div class="region-item" data-code="VN" data-lang="vi-VN">VIETNAM</div>
+                        <div class="region-item" data-code="PK" data-lang="en-PK">PAKISTAN</div>
+                        <div class="region-item" data-code="BD" data-lang="bn-BD">BANGLADESH</div>
+                        <div class="region-item" data-code="AR" data-lang="es-AR">ARGENTINA</div>
+                        <div class="region-item" data-code="CL" data-lang="es-CL">CHILE</div>
+                        <div class="region-item" data-code="CO" data-lang="es-CO">COLOMBIA</div>
+                        <div class="region-item" data-code="NZ" data-lang="en-NZ">NEW ZEALAND</div>
+                        <div class="region-item" data-code="IL" data-lang="he-IL">ISRAEL</div>
+                        <div class="region-item" data-code="UA" data-lang="uk-UA">UKRAINE</div>
+                        <div class="region-item" data-code="AT" data-lang="de-AT">AUSTRIA</div>
+                        <div class="region-item" data-code="CH" data-lang="de-CH">SWITZERLAND</div>
+                        <div class="region-item" data-code="BE" data-lang="nl-BE">BELGIUM</div>
+                        <div class="region-item" data-code="PT" data-lang="pt-PT">PORTUGAL</div>
+                        <div class="region-item" data-code="GR" data-lang="el-GR">GREECE</div>
+                        <div class="region-item" data-code="IE" data-lang="en-IE">IRELAND</div>
+                    </div>
+                </div>
+
                 <div class="selected-regions" id="selectedRegionsDisplay">
                     <span class="regions-label">ACTIVE:</span>
-                    <span id="activeRegionsList">WORLDWIDE</span>
+                    <span id="activeRegionsList">USA</span>
                 </div>
             </div>
 

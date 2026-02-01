@@ -73,6 +73,7 @@ body {
 .header-actions {
     display: flex;
     align-items: center;
+    gap: 24px;
 }
 
 .selected-count {
@@ -167,6 +168,7 @@ body {
     font-size: 11px;
     letter-spacing: 1px;
     color: #666;
+    margin-top: 16px;
 }
 
 .regions-label {
@@ -176,6 +178,64 @@ body {
 #activeRegionsList {
     color: var(--black);
     font-weight: 500;
+}
+
+/* More Regions Dropdown */
+.more-regions {
+    margin-top: 12px;
+}
+
+.more-regions-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border: 1px solid var(--grey-border);
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+}
+
+.more-regions-toggle:hover {
+    border-color: var(--black);
+}
+
+.more-regions.open .more-regions-toggle {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+}
+
+.toggle-arrow {
+    font-size: 10px;
+    transition: transform 0.2s ease;
+}
+
+.more-regions.open .toggle-arrow {
+    transform: rotate(180deg);
+}
+
+.more-regions-dropdown {
+    display: none;
+    grid-template-columns: repeat(6, 1fr);
+    border: 1px solid var(--black);
+    border-top: none;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.more-regions.open .more-regions-dropdown {
+    display: grid;
+}
+
+.more-regions-dropdown .region-item {
+    border-bottom: 1px solid var(--grey-border);
+}
+
+.more-regions-dropdown .region-item:nth-child(6n) {
+    border-right: none;
 }
 
 .nav-star {
