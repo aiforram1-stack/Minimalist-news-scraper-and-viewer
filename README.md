@@ -5,33 +5,26 @@ A no-nonsense news aggregator that cuts through the noise. Pick your regions, ch
 ## Screenshots
 
 ### Region & Topic Selection
-Select from 40+ countries and 20 topic categories. Multi-select supported for both.
+Select from 40+ countries (USA, UK, India, China, Japan, Germany, and more) and 20 topic categories. Multi-select both regions and topics to aggregate news from multiple sources.
 
 ![Topic Selection](screenshots/topics.png)
 
 ### News Grid View
-Headlines from multiple sources and regions, organized and scannable. Star articles to save them.
+Headlines from your selected regions and sources, organized in a clean grid. Star any article to save it for later.
 
 ![News Grid](screenshots/news-grid.png)
 
 ### List View
-Denser format for power readers. Switch layouts with one click.
+Switch to a denser list format with one click. Three layouts available: Grid, List, and Compact.
 
 ![News List](screenshots/news-list.png)
-
-## What's New
-
-- **Multi-region support** - Aggregate news from USA, UK, India, China, Japan, Germany, and 30+ more countries
-- **Star articles** - Save articles for later (persisted in browser storage)
-- **Three layouts** - Grid, List, and Compact views
-- **Balenciaga-inspired design** - High-fashion minimalist aesthetic
 
 ## Why This Exists
 
 Most news apps want your attention. This one respects your time.
 
 - **No infinite scroll** - You see what you asked for, nothing more
-- **No algorithmic feed** - You choose the topics, not an algorithm
+- **No algorithmic feed** - You choose the topics and regions, not an algorithm
 - **No tracking** - Runs entirely in your browser, no analytics
 - **No account** - Open the page and start reading
 - **No ads** - Clean interface, zero distractions
@@ -39,12 +32,12 @@ Most news apps want your attention. This one respects your time.
 ## Features
 
 ### Web Interface
-- **40+ regions** - USA, UK, India, China, Japan, Germany, France, Russia, Brazil, and more
-- **Multi-region support** - Fetch news from multiple countries simultaneously
-- **20 preset categories** - Technology, AI, Sports, Business, Entertainment, etc.
+- **40+ regions** - USA, UK, India, China, Japan, Germany, France, Russia, Brazil, Australia, Canada, South Korea, and many more
+- **Multi-region aggregation** - Fetch news from multiple countries at once
+- **20 preset categories** - Technology, AI, Crypto, Sports, Business, Entertainment, Politics, Science, Health, and more
 - **Custom topics** - Add any topic you want
 - **Three layouts** - Grid for scanning, List for reading, Compact for power users
-- **Star articles** - Save them for later (stored locally)
+- **Star articles** - Save them for later (stored locally in your browser)
 - **Direct links** - No interstitial pages, straight to the source
 
 ### Python CLI
@@ -52,12 +45,12 @@ For automation and batch processing:
 - Interactive topic selection
 - Export to CSV with full metadata
 - Automatic deduplication across topics
-- Run it on a schedule with cron
+- Schedule with cron for daily news digests
 
 ## Quick Start
 
 ### Web Interface
-Open `index.html` in any browser. That's it.
+Open `index.html` in any browser. No build step, no dependencies.
 
 ### Python CLI
 ```bash
@@ -89,7 +82,7 @@ Articles are fetched from Google News RSS feeds with region-specific parameters.
 
 - Vanilla HTML/CSS/JavaScript (no frameworks, no build step)
 - Python 3 with feedparser
-- Google News RSS with multi-region support
+- Google News RSS with region and language support
 
 ## License
 
