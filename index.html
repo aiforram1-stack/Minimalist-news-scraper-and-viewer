@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEWS SCRAPER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="nav-link" data-view="topics">TOPICS</a>
+            <a href="#" class="nav-link" data-view="news">NEWS</a>
+            <a href="#" class="nav-link" data-view="starred">STARRED</a>
+        </nav>
+        <div class="logo">NEWS SCRAPER</div>
+        <div class="header-actions">
+            <span class="selected-count" id="selectedCount">0 SELECTED</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Topics View -->
+        <section class="view active" id="topicsView">
+            <div class="page-title">
+                <h1>SELECT TOPICS</h1>
+                <p>CHOOSE CATEGORIES TO DISCOVER</p>
+            </div>
+
+            <!-- Topics Grid -->
+            <div class="topics-container">
+                <div class="topics-grid" id="topicsGrid">
+                    <!-- Topics will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Custom Topic Input -->
+            <div class="custom-input-section">
+                <div class="section-label">ADD CUSTOM TOPIC</div>
+                <div class="input-row">
+                    <input type="text" id="customInput" placeholder="TYPE TOPIC AND PRESS ENTER" autocomplete="off">
+                    <button id="addBtn" class="btn btn-secondary">ADD</button>
+                </div>
+                <div class="custom-tags" id="customTags"></div>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="action-bar">
+                <button id="clearBtn" class="btn btn-secondary">CLEAR ALL</button>
+                <button id="selectAllBtn" class="btn btn-secondary">SELECT ALL</button>
+                <button id="scrapeBtn" class="btn btn-primary" disabled>START SCRAPING</button>
+            </div>
+        </section>
+
+        <!-- News View -->
+        <section class="view" id="newsView">
+            <div class="page-title">
+                <h1>LATEST NEWS</h1>
+                <p id="newsSubtitle">SCRAPED ARTICLES</p>
+            </div>
+
+            <!-- Layout Controls -->
+            <div class="layout-controls">
+                <span class="layout-label">LAYOUT</span>
+                <div class="layout-options">
+                    <button class="layout-btn active" data-layout="grid" title="Grid View">
+                        <span class="layout-icon">▦</span>
+                    </button>
+                    <button class="layout-btn" data-layout="list" title="List View">
+                        <span class="layout-icon">☰</span>
+                    </button>
+                    <button class="layout-btn" data-layout="compact" title="Compact View">
+                        <span class="layout-icon">▤</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <div class="loader"></div>
+                <p>FETCHING ARTICLES</p>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <p>NO ARTICLES FOUND</p>
+                <button class="btn btn-secondary" data-view="topics">SELECT TOPICS</button>
+            </div>
+
+            <!-- News Grid -->
+            <div class="news-grid" id="newsGrid">
+                <!-- News articles will be inserted here -->
+            </div>
+        </section>
+
+        <!-- Starred View -->
+        <section class="view" id="starredView">
+            <div class="page-title">
+                <h1>STARRED</h1>
+                <p id="starredSubtitle">YOUR SAVED ARTICLES</p>
+            </div>
+
+            <!-- Layout Controls for Starred -->
+            <div class="layout-controls">
+                <span class="layout-label">LAYOUT</span>
+                <div class="layout-options" id="starredLayoutOptions">
+                    <button class="layout-btn active" data-layout="grid" title="Grid View">
+                        <span class="layout-icon">▦</span>
+                    </button>
+                    <button class="layout-btn" data-layout="list" title="List View">
+                        <span class="layout-icon">☰</span>
+                    </button>
+                    <button class="layout-btn" data-layout="compact" title="Compact View">
+                        <span class="layout-icon">▤</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Empty Starred State -->
+            <div class="empty-state" id="emptyStarredState">
+                <p>NO STARRED ARTICLES</p>
+                <p class="empty-hint">CLICK THE ★ ON ANY ARTICLE TO SAVE IT</p>
+                <button class="btn btn-secondary" data-view="news">BROWSE NEWS</button>
+            </div>
+
+            <!-- Starred Grid -->
+            <div class="news-grid" id="starredGrid">
+                <!-- Starred articles will be inserted here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <span>NEWS SCRAPER © 2024</span>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
