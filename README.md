@@ -32,6 +32,8 @@ Most news apps want your attention. This one respects your time.
 ## Features
 
 ### Web Interface
+- **40+ regions** - Select news from USA, UK, India, China, Japan, and more
+- **Multi-region support** - Aggregate news from multiple countries at once
 - **20 preset categories** covering tech, business, sports, entertainment, and more
 - **Custom topics** for niche interests (just type and add)
 - **Three layouts** - Grid for scanning, List for reading, Compact for power users
